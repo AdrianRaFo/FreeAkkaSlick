@@ -1,6 +1,6 @@
-lazy val freesV = "0.5.0"
+lazy val freesV = "0.5.1"
 
-val circeV = "0.9.0-M2"
+val circeV = "0.9.0"
 
 val slickV = "3.2.1"
 

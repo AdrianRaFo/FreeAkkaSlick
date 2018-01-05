@@ -6,15 +6,17 @@ import akka.Done
 import freestyle.free.implicits._
 import freestyle.free.http.akka._
 import UserM._
-import UserM.implicits._
 
 import scala.util.Try
 
 object FreeServer extends HttpApp {
 
+  import UserM.implicits._
+
   implicit val system: ActorSystem = ActorSystem("FreeAkkaSlick")
 
   val app = UserApp.to[UserApp.Op]
+
   override protected def routes = {
     (get & path("user" / IntNumber)) { id =>
       complete(app.get(id))

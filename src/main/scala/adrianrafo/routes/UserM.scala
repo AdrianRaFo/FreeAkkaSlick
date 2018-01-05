@@ -17,19 +17,18 @@ import scala.concurrent.duration.Duration
 import scala.concurrent.ExecutionContext.Implicits.global
 object UserM {
 
-  @free
-  trait UserApp {
-    def get(id: Int): FS[UserdataRow]
-  }
+  @free trait UserApp {
+      def get(id: Int): FS[UserdataRow]
+    }
 
   trait Implicits {
 
-    implicit val handler: UserApp.Handler[Id] = new UserApp.Handler[Id] {
 
+    implicit val handler: UserApp.Handler[Id] = new UserApp.Handler[Id] {
       def get(id: Int): UserdataRow = {
-       val user: UserdataRow =  Await.result(Services.print[Data.Op](id).interpret[Future], Duration.Inf)
+        val user: Future[UserdataRow] = Services.print[Data.Op](id).interpret[Future]
         Await.result(Services.delete[Data.Op](id).interpret[Future], Duration.Inf)
-        user
+        Await.result(user,Duration.Inf)
       }
     }
 
