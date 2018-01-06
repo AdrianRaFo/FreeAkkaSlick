@@ -18,5 +18,5 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 object Index extends App {
   Await.result(Services.create[Data.Op].interpret[Future], Duration.Inf)
-  FreeServer.startServer("192.168.1.133", 16753)
+  FreeServer.startServer("localhost", 16753)
 }

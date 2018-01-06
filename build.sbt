@@ -6,7 +6,7 @@ val slickV = "3.2.1"
 
 val akkaV = "2.4.20"
 
-lazy val baseDeps: Seq[Def.Setting[_]] = Seq(
+lazy val baseDeps = Seq(
   scalaVersion := "2.12.4",
   wartremoverWarnings in (Compile, compile) ++= Warts.unsafe,
   scalacOptions ++= Seq(
@@ -29,33 +29,36 @@ lazy val freeDeps = Seq(
   "io.frees" %% "frees-slick"   % freesV,
   "io.frees" %% "frees-logging" % freesV)
 
-lazy val circeDeps =Seq(
+lazy val circeDeps = Seq(
   "io.circe" %% "circe-core"    % circeV,
   "io.circe" %% "circe-generic" % circeV,
   "io.circe" %% "circe-parser"  % circeV)
 
 lazy val persistenceDeps = Seq(
-  "com.typesafe.slick" %% "slick"           % slickV,
-  "com.typesafe.slick" %% "slick-hikaricp"  % slickV,
-  "com.typesafe.slick" %% "slick-codegen"   % slickV,
-  "org.postgresql"     % "postgresql"       % "42.1.4")
+  "com.typesafe.slick" %% "slick"          % slickV,
+  "com.typesafe.slick" %% "slick-hikaricp" % slickV,
+  "com.typesafe.slick" %% "slick-codegen"  % slickV,
+  "org.postgresql"     % "postgresql"      % "42.1.4"
+)
 
 lazy val akkaDeps = Seq(
-  "com.typesafe.akka"  %% "akka-http"       % "10.0.11",
-  "com.typesafe.akka"  %% "akka-actor"      % akkaV,
-  "com.typesafe.akka"  %% "akka-slf4j"      % akkaV,
-  "ch.qos.logback"     % "logback-classic"  % "1.2.3")
+  "com.typesafe.akka" %% "akka-http"      % "10.0.11",
+  "com.typesafe.akka" %% "akka-actor"     % akkaV,
+  "com.typesafe.akka" %% "akka-slf4j"     % akkaV,
+  "ch.qos.logback"    % "logback-classic" % "1.2.3"
+)
 
 lazy val `FreeAkkaSlick` = project
   .in(file("."))
   .settings(name := "FreeAkkaSlick")
   .settings(moduleName := "FreeAkkaSlick")
-  .settings(libraryDependencies++=baseDeps++freeDeps++circeDeps++persistenceDeps++akkaDeps)
+  .settings(baseDeps)
+  .settings(libraryDependencies ++= freeDeps ++ circeDeps ++ persistenceDeps ++ akkaDeps)
   .settings(slickGen := slickCodeGenTask.value) // register manual sbt command
   .settings(
-  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
-  scalacOptions ++= Seq("-Xplugin-require:macroparadise","-Ywarn-unused-import"),
-  scalacOptions in (Compile, console) ~= (_ filterNot (_ contains "paradise"))
+    addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
+    scalacOptions ++= Seq("-Xplugin-require:macroparadise", "-Ywarn-unused-import"),
+    scalacOptions in (Compile, console) ~= (_ filterNot (_ contains "paradise"))
   )
 
 lazy val slickGen = TaskKey[Seq[File]]("slickGen")
