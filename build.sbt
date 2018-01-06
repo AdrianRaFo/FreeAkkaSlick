@@ -50,7 +50,7 @@ lazy val `FreeAkkaSlick` = project
   .in(file("."))
   .settings(name := "FreeAkkaSlick")
   .settings(moduleName := "FreeAkkaSlick")
-  .settings(libraryDependencies++=freeDeps++circeDeps++persistenceDeps++akkaDeps)
+  .settings(libraryDependencies++=baseDeps++freeDeps++circeDeps++persistenceDeps++akkaDeps)
   .settings(slickGen := slickCodeGenTask.value) // register manual sbt command
   .settings(
   addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),

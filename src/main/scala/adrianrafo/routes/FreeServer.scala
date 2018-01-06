@@ -26,8 +26,4 @@ object FreeServer extends HttpApp {
   override protected def postHttpBindingFailure(cause: Throwable): Unit =
     println(s"The server could not be started due to $cause")
 
-  override protected def postServerShutdown(attempt: Try[Done], system: ActorSystem): Unit = {
-    super.postServerShutdown(attempt, system)
-    System.exit(0)
-  }
 }
