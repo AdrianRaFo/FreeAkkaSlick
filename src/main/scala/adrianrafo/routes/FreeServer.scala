@@ -2,12 +2,9 @@ package adrianrafo.routes
 
 import akka.http.scaladsl.server.HttpApp
 import akka.actor.ActorSystem
-import akka.Done
 import freestyle.free.implicits._
 import freestyle.free.http.akka._
 import UserM._
-
-import scala.util.Try
 
 object FreeServer extends HttpApp {
 

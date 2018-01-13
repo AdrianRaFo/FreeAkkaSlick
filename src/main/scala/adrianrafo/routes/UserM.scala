@@ -23,7 +23,6 @@ object UserM {
 
   trait Implicits {
 
-
     implicit val handler: UserApp.Handler[Id] = new UserApp.Handler[Id] {
       def get(id: Int): UserdataRow = {
         val user: Future[UserdataRow] = Services.print[Data.Op](id).interpret[Future]

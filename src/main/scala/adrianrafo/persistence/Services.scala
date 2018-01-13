@@ -16,8 +16,6 @@
 
 package adrianrafo.persistence
 
-import cats.implicits._
-
 import freestyle.free._
 import freestyle.free.slick._
 import freestyle.free.slick.implicits._
